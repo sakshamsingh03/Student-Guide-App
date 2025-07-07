@@ -1,5 +1,6 @@
 export default function Dashboard() {
-  const username = "Saksham"; // later from backend
+  const user = JSON.parse(localStorage.getItem("user"));
+  const username = user?.email ? user.email.split("@")[0] : "Student";
 
   return (
     <div>

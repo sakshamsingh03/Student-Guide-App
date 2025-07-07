@@ -1,6 +1,23 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Layout() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // ✅ Redirect to /login if not logged in
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      navigate("/login");
+    }
+  }, [navigate, location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
@@ -16,6 +33,12 @@ export default function Layout() {
           <Link to="/resources" className="hover:underline">📚 Academic Resources</Link>
           <Link to="/settings" className="hover:underline">⚙️ Settings</Link>
         </nav>
+        <button
+          onClick={handleLogout}
+          className="mt-8 bg-red-600 text-white rounded px-4 py-2 hover:bg-red-700 transition"
+        >
+          Logout
+        </button>
       </aside>
 
       {/* Main Content */}
