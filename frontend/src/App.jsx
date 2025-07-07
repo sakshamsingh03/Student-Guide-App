@@ -4,6 +4,8 @@ import Dashboard from "./pages/Dashboard";
 import TaskManager from "./pages/TaskManager";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import './index.css';
+
 // import other pages...
 
 export default function App() {
