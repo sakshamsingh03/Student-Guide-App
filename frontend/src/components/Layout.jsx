@@ -19,9 +19,9 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen">
-      <aside className="w-76 bg-purple-500 text-white p-5 space-y-8">
-        <h1 className="text-4xl font-bold mb-6">Student Guide</h1>
-        <nav className="flex flex-col space-y-8">
+      <aside className="w-76 bg-violet-500 text-white p-5 space-y-8">
+        <h1 className="text-4xl font-bold mb-12">Student Guide</h1>
+        <nav className="flex flex-col space-y-6">
           <Link to="/dashboard" className="hover:underline">🏠 Dashboard</Link>
           <Link to="/tasks" className="hover:underline">✅ Tasks</Link>
           <Link to="/calendar" className="hover:underline">🗓️ Timetable</Link>
@@ -31,7 +31,7 @@ export default function Layout() {
         </nav>
         <button
           onClick={handleLogout}
-          className="mt-8 bg-blue-400 text-white rounded px-4 py-2 hover:bg-blue-600 transition"
+          className=" mt-8 bg-sky-500 text-white rounded px-4 py-2 hover:bg-sky-700 transition"
         >
           Logout
         </button>
