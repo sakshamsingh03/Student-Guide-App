@@ -20,14 +20,32 @@ export default function Layout() {
   return (
     <div className="flex min-h-screen">
       <aside className="w-76 bg-violet-500 text-white p-5 space-y-8">
-        <h1 className="text-4xl font-bold mb-12">Student Guide</h1>
-        <nav className="flex flex-col space-y-6">
-          <Link to="/dashboard" className="hover:underline">🏠 Dashboard</Link>
-          <Link to="/tasks" className="hover:underline">✅ Tasks</Link>
-          <Link to="/calendar" className="hover:underline">🗓️ Timetable</Link>
-          <Link to="/notes" className="hover:underline">📝 Notes</Link>
-          <Link to="/resources" className="hover:underline">📚 Academic Resources</Link>
-          <Link to="/settings" className="hover:underline">⚙️ Settings</Link>
+        <h1 className="text-4xl font-bold mb-6">Student Guide</h1>
+        <nav className="flex flex-col space-y-4">
+          <Link to="/dashboard" className="block hover:bg-sky-400 rounded px-4 py-3">
+            🏠 Dashboard
+          </Link>
+          <Link to="/tasks" className="block hover:bg-sky-400 rounded px-4 py-3">
+            ✅ Tasks
+          </Link>
+          <Link to="/diary" className="block hover:bg-sky-400 rounded px-4 py-3">
+            📓 Diary
+          </Link>
+          <Link to="/calendar" className="block hover:bg-sky-400 rounded px-4 py-3">
+            🗓️ Timetable
+          </Link>
+          <Link to="/notes" className="block hover:bg-sky-400 rounded px-4 py-3">
+            📝 Notes
+          </Link>
+          <Link to="/mood" className="block hover:bg-sky-400 rounded px-4 py-3">
+            😊 Mood Tracker
+          </Link>
+          <Link to="/resources" className="block hover:bg-sky-400 rounded px-4 py-3">
+            📚 Academic Resources
+          </Link>
+          <Link to="/settings" className="block hover:bg-blue-400 rounded px-4 py-3">
+            ⚙️ Settings
+          </Link>
         </nav>
         <button
           onClick={handleLogout}

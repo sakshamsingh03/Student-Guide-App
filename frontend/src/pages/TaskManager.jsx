@@ -3,18 +3,40 @@ import { useState } from "react";
 export default function TaskManager() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState({
-    title: "",
+    text: "",
     dueDate: "",
-    priority: "Medium",
+    important: false,
   });
+  const [showImportantOnly, setShowImportantOnly] = useState(false);
 
   const handleAddTask = () => {
-    if (!newTask.title) return;
-    setTasks([
-      ...tasks,
-      { ...newTask, id: Date.now() }
-    ]);
-    setNewTask({ title: "", dueDate: "", priority: "Medium" });
+    if (newTask.text.trim() !== "") {
+      setTasks([
+        ...tasks,
+        {
+          ...newTask,
+          id: Date.now(),
+          completed: false,
+        },
+      ]);
+      setNewTask({ text: "", dueDate: "", important: false });
+    }
+  };
+
+  const handleToggleComplete = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  const handleToggleImportant = (id) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, important: !task.important } : task
+      )
+    );
   };
 
   const handleDeleteTask = (id) => {
@@ -22,90 +44,124 @@ export default function TaskManager() {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewTask({ ...newTask, [name]: value });
+    const { name, value, type, checked } = e.target;
+    setNewTask((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white p-6 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-8 text-blue-700">🎯 Task Manager</h1>
+  const filteredTasks = showImportantOnly
+    ? tasks.filter((task) => task.important)
+    : tasks;
 
-      <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6 mb-8">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Add New Task</h2>
-        <div className="space-y-4">
+  return (
+    <div className="max-w-2xl mx-auto bg-white shadow-lg p-6 rounded mt-6">
+      <h2 className="text-4xl font-bold mb-6 text-sky-700 text-center">
+        ✅ Task Manager
+      </h2>
+
+      <div className="bg-gray-50 p-4 rounded mb-6 shadow-sm">
+        <h3 className="text-xl font-semibold mb-3">Add New Task</h3>
+        <div className="flex flex-col gap-3">
           <input
             type="text"
-            name="title"
-            placeholder="Task title"
-            value={newTask.title}
+            name="text"
+            value={newTask.text}
             onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
+            placeholder="Task title"
+            className="border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-400"
           />
           <input
             type="date"
             name="dueDate"
             value={newTask.dueDate}
             onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
+            className="border px-3 py-2 rounded focus:outline-none focus:ring focus:border-blue-400"
           />
-          <select
-            name="priority"
-            value={newTask.priority}
-            onChange={handleInputChange}
-            className="w-full border-gray-300 rounded-lg shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2"
-          >
-            <option value="High">High Priority</option>
-            <option value="Medium">Medium Priority</option>
-            <option value="Low">Low Priority</option>
-          </select>
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              name="important"
+              checked={newTask.important}
+              onChange={handleInputChange}
+              className="accent-blue-600"
+            />
+            <span className="text-sm">Mark as Important</span>
+          </label>
           <button
             onClick={handleAddTask}
-            className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition"
+            className="bg-sky-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
             ➕ Add Task
           </button>
         </div>
       </div>
 
-      <div className="w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Task List</h2>
-        {tasks.length === 0 && (
-          <p className="text-gray-500 italic">No tasks added yet.</p>
-        )}
-        <ul className="space-y-4">
-          {tasks.map((task) => (
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold">Your Tasks</h3>
+        <button
+          onClick={() => setShowImportantOnly(!showImportantOnly)}
+          className="text-sm text-blue-600 hover:underline"
+        >
+          {showImportantOnly ? "Show All" : "Show Only Important"}
+        </button>
+      </div>
+
+      {filteredTasks.length === 0 ? (
+        <p className="text-gray-500 italic">No tasks to show.</p>
+      ) : (
+        <ul className="space-y-3">
+          {filteredTasks.map((task) => (
             <li
               key={task.id}
-              className="flex justify-between items-center border rounded-lg px-4 py-3 bg-gray-50 shadow-sm hover:bg-gray-100 transition"
+              className={`flex justify-between items-center border rounded px-4 py-3 shadow-sm ${
+                task.completed ? "bg-green-50 line-through" : "bg-white"
+              }`}
             >
-              <div>
-                <h3 className="font-semibold text-lg text-gray-800">{task.title}</h3>
+              <div className="flex-1">
+                <h4
+                  className="font-medium text-lg cursor-pointer"
+                  onClick={() => handleToggleComplete(task.id)}
+                >
+                  {task.text}
+                </h4>
                 <p className="text-sm text-gray-600">
                   Due: {task.dueDate || "No date"}
                 </p>
-                <span
-                  className={`inline-block mt-1 px-2 py-1 rounded text-xs font-medium ${
-                    task.priority === "High"
-                      ? "bg-red-100 text-red-700"
-                      : task.priority === "Medium"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-green-100 text-green-700"
-                  }`}
-                >
-                  {task.priority} Priority
-                </span>
+                <div className="mt-1 space-x-2">
+                  {task.important && (
+                    <span className="inline-block bg-red-100 text-red-700 px-2 py-1 rounded text-xs">
+                      Important
+                    </span>
+                  )}
+                  {task.completed && (
+                    <span className="inline-block bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+                      Completed
+                    </span>
+                  )}
+                </div>
               </div>
-              <button
-                onClick={() => handleDeleteTask(task.id)}
-                className="text-red-500 hover:text-red-700 font-bold"
-                title="Delete task"
-              >
-                ❌
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleToggleImportant(task.id)}
+                  className="text-yellow-500 hover:text-yellow-700"
+                  title="Toggle Important"
+                >
+                  ⭐
+                </button>
+                <button
+                  onClick={() => handleDeleteTask(task.id)}
+                  className="text-red-600 hover:text-red-800"
+                  title="Delete Task"
+                >
+                  ❌
+                </button>
+              </div>
             </li>
           ))}
         </ul>
-      </div>
+      )}
     </div>
   );
 }
