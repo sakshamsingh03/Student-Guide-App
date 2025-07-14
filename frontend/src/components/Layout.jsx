@@ -18,8 +18,8 @@ export default function Layout() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-76 bg-violet-500 text-white p-5 space-y-8">
+    <div className="flex h-screen overflow-hidden">
+      <aside className="w-76 bg-violet-500 text-white p-5 space-y-8 h-screen overflow-y-auto">
         <h1 className="text-4xl font-bold mb-6">Student Guide</h1>
         <nav className="flex flex-col space-y-4">
           <Link to="/dashboard" className="block hover:bg-sky-400 rounded px-4 py-3">
@@ -54,7 +54,7 @@ export default function Layout() {
           Logout
         </button>
       </aside>
-      <main className="flex-1 bg-gray-50 p-8">
+      <main className="flex-1 bg-gray-50 p-8 overflow-y-auto h-screen">
         <Outlet />
       </main>
     </div>
