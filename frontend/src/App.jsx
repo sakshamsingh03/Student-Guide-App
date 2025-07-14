@@ -8,6 +8,7 @@ import './index.css';
 import Timetable from "./pages/Timetable";
 import Diary from "./pages/Diary";
 import Notes from "./pages/Notes";
+import MoodTracker from "./pages/MoodTracker";
 
 
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="calendar" element={<Timetable />} />
           <Route path="diary" element={<Diary />} />
           <Route path="notes" element={<Notes />} />
+          <Route path="/mood" element={<MoodTracker />} />
 
 
           {/* Add more routes here */}
