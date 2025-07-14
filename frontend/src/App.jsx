@@ -7,6 +7,8 @@ import Signup from "./pages/Signup";
 import './index.css';
 import Timetable from "./pages/Timetable";
 import Diary from "./pages/Diary";
+import Notes from "./pages/Notes";
+
 
 
 // import other pages...
@@ -22,6 +24,8 @@ export default function App() {
           <Route path="tasks" element={<TaskManager />} />
           <Route path="calendar" element={<Timetable />} />
           <Route path="diary" element={<Diary />} />
+          <Route path="notes" element={<Notes />} />
+
 
           {/* Add more routes here */}
         </Route>
