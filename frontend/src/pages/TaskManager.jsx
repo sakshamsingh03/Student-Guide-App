@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "../Notification";
 
 export default function TaskManager() {
-  // Load from localStorage on mount
+  const { showNotification } = useNotification();
+
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem("tasks");
     try {
@@ -17,24 +19,21 @@ export default function TaskManager() {
     important: false,
   });
   const [showImportantOnly, setShowImportantOnly] = useState(false);
-
-  // Save to localStorage whenever tasks change
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
   const handleAddTask = () => {
     if (newTask.text.trim() !== "") {
-      setTasks([
-        ...tasks,
-        {
-          ...newTask,
-          id: Date.now(),
-          completed: false,
-          createdAt: new Date().toISOString(),
-        },
-      ]);
+      const addedTask = {
+        ...newTask,
+        id: Date.now(),
+        completed: false,
+        createdAt: new Date().toISOString(),
+      };
+      setTasks([...tasks, addedTask]);
       setNewTask({ text: "", dueDate: "", important: false });
+      showNotification(`Task '${addedTask.text}' added successfully!`);
     }
   };
 
@@ -55,7 +54,11 @@ export default function TaskManager() {
   };
 
   const handleDeleteTask = (id) => {
+    const taskToDelete = tasks.find((task) => task.id === id);
     setTasks(tasks.filter((task) => task.id !== id));
+    if (taskToDelete) {
+      showNotification(`Task '${taskToDelete.text}' deleted successfully!`);
+    }
   };
 
   const handleInputChange = (e) => {

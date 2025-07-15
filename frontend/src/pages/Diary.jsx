@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "../Notification";
 
 export default function Diary() {
-  // Load and migrate old data format if needed
+  const { showNotification } = useNotification();
+
   const [entries, setEntries] = useState(() => {
     const saved = localStorage.getItem("diaryEntries");
     if (!saved) return [];
     try {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed)) return parsed;
-      // Migrate old object format
       return Object.entries(parsed).map(([date, content]) => ({
         date,
         content,
@@ -39,12 +40,14 @@ export default function Diary() {
     }
     setEntries(updated);
     localStorage.setItem("diaryEntries", JSON.stringify(updated));
+    showNotification(`Diary entry for ${currentDate} saved successfully!`);
   };
 
   const handleDelete = (date) => {
     const updated = entries.filter((e) => e.date !== date);
     setEntries(updated);
     localStorage.setItem("diaryEntries", JSON.stringify(updated));
+    showNotification(`Diary entry for ${date} deleted successfully!`);
   };
 
   return (
