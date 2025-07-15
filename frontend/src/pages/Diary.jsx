@@ -1,28 +1,48 @@
 import { useState, useEffect } from "react";
 
 export default function Diary() {
+  // Load and migrate old data format if needed
   const [entries, setEntries] = useState(() => {
     const saved = localStorage.getItem("diaryEntries");
-    return saved ? JSON.parse(saved) : {};
+    if (!saved) return [];
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) return parsed;
+      // Migrate old object format
+      return Object.entries(parsed).map(([date, content]) => ({
+        date,
+        content,
+      }));
+    } catch {
+      return [];
+    }
   });
+
   const [currentDate, setCurrentDate] = useState(() =>
     new Date().toISOString().split("T")[0]
   );
   const [currentText, setCurrentText] = useState("");
 
   useEffect(() => {
-    setCurrentText(entries[currentDate] || "");
+    const entry = entries.find((e) => e.date === currentDate);
+    setCurrentText(entry ? entry.content : "");
   }, [currentDate, entries]);
 
   const handleSave = () => {
-    const updated = { ...entries, [currentDate]: currentText };
+    let updated;
+    const existingIndex = entries.findIndex((e) => e.date === currentDate);
+    if (existingIndex >= 0) {
+      updated = [...entries];
+      updated[existingIndex].content = currentText;
+    } else {
+      updated = [...entries, { date: currentDate, content: currentText }];
+    }
     setEntries(updated);
     localStorage.setItem("diaryEntries", JSON.stringify(updated));
   };
 
   const handleDelete = (date) => {
-    const updated = { ...entries };
-    delete updated[date];
+    const updated = entries.filter((e) => e.date !== date);
     setEntries(updated);
     localStorage.setItem("diaryEntries", JSON.stringify(updated));
   };
@@ -58,24 +78,26 @@ export default function Diary() {
         </button>
       </div>
 
-      {Object.keys(entries).length > 0 && (
+      {entries.length > 0 && (
         <div className="max-w-3xl mx-auto bg-white shadow rounded-lg p-6">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">📜 Previous Entries</h2>
           <ul className="space-y-4">
-            {Object.entries(entries).map(([date, text]) => (
-              <li key={date} className="border rounded-lg p-4 bg-gray-50 shadow-sm">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-gray-700">{date}</span>
-                  <button
-                    onClick={() => handleDelete(date)}
-                    className="text-red-500 hover:text-red-700 font-bold"
-                  >
-                    ❌
-                  </button>
-                </div>
-                <p className="whitespace-pre-wrap text-gray-800">{text}</p>
-              </li>
-            ))}
+            {entries
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .map((entry) => (
+                <li key={entry.date} className="border rounded-lg p-4 bg-gray-50 shadow-sm">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-semibold text-gray-700">{entry.date}</span>
+                    <button
+                      onClick={() => handleDelete(entry.date)}
+                      className="text-red-500 hover:text-red-700 font-bold"
+                    >
+                      ❌
+                    </button>
+                  </div>
+                  <p className="whitespace-pre-wrap text-gray-800">{entry.content}</p>
+                </li>
+              ))}
           </ul>
         </div>
       )}

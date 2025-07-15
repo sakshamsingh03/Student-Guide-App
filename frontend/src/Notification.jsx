@@ -1,4 +1,3 @@
-// src/context/NotificationContext.jsx
 import { createContext, useState, useContext } from "react";
 
 const NotificationContext = createContext();
@@ -10,7 +9,7 @@ export function NotificationProvider({ children }) {
   const showNotification = (msg) => {
     setMessage(msg);
     setShow(true);
-    setTimeout(() => setShow(false), 3000); // auto hide after 3s
+    setTimeout(() => setShow(false), 3000);
   };
 
   return (

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "../Notification"; // ✅ Add this
 
 export default function MoodTracker() {
+  const { showNotification } = useNotification(); // ✅ Get notification function
+
   const today = new Date();
   const todayISO = getISODate(today);
 
@@ -41,6 +44,17 @@ export default function MoodTracker() {
       ...entries,
       [todayISO]: { mood, note }
     });
+    showNotification("Mood saved successfully!"); // ✅ Show success
+    setShowForm(false);
+    setMood("");
+    setNote("");
+  };
+
+  const handleRemove = () => {
+    const updated = { ...entries };
+    delete updated[todayISO];
+    setEntries(updated);
+    showNotification("Mood deleted successfully!"); // ✅ Show delete
     setShowForm(false);
     setMood("");
     setNote("");
@@ -73,19 +87,13 @@ export default function MoodTracker() {
 
       <div className="max-w-5xl mx-auto bg-white shadow rounded-lg p-4 mb-4">
         <div className="flex items-center justify-between mb-4">
-          <button
-            onClick={goPrevMonth}
-            className="px-3 py-1 rounded bg-sky-400 text-white hover:bg-sky-500"
-          >
+          <button onClick={goPrevMonth} className="px-3 py-1 rounded bg-sky-400 text-white hover:bg-sky-500">
             ← Prev
           </button>
           <h2 className="text-3xl font-bold text-sky-500">
             {monthName} {viewYear}
           </h2>
-          <button
-            onClick={goNextMonth}
-            className="px-3 py-1 rounded bg-sky-400 text-white hover:bg-sky-500"
-          >
+          <button onClick={goNextMonth} className="px-3 py-1 rounded bg-sky-400 text-white hover:bg-sky-500">
             Next →
           </button>
         </div>
@@ -126,11 +134,9 @@ export default function MoodTracker() {
                     setShowForm(true);
                   }
                 }}
-                className={`
-                  border rounded-lg p-2 cursor-pointer transition
+                className={`border rounded-lg p-2 cursor-pointer transition
                   ${isToday ? "border-sky-500 shadow-lg" : "border-gray-300"}
-                  bg-white hover:bg-sky-50 flex flex-col
-                `}
+                  bg-white hover:bg-sky-50 flex flex-col`}
               >
                 <div className="text-sm font-medium text-gray-700">{dateObj.getDate()}</div>
                 {entry && (
@@ -198,14 +204,7 @@ export default function MoodTracker() {
                 Save
               </button>
               <button
-                onClick={() => {
-                  const updated = { ...entries };
-                  delete updated[todayISO];
-                  setEntries(updated);
-                  setShowForm(false);
-                  setMood("");
-                  setNote("");
-                }}
+                onClick={handleRemove}
                 className="px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600"
               >
                 Remove

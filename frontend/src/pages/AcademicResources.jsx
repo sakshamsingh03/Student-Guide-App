@@ -31,6 +31,12 @@ export default function AcademicResources() {
     localStorage.setItem("academicResourcesV2", JSON.stringify(resources));
   }, [resources]);
 
+  // Helper to get readable label for category
+  const getCategoryLabel = (catKey) => {
+    const cat = CATEGORIES.find(c => c.key === catKey);
+    return cat?.label || catKey;
+  };
+
   const handleChange = (catKey, field, value) => {
     setNewResource((prev) => ({
       ...prev,
@@ -50,7 +56,7 @@ export default function AcademicResources() {
       ],
     }));
 
-    showNotification(`${title} added successfully!`);
+    showNotification(`${getCategoryLabel(catKey)} - ${title} added successfully!`);
 
     setNewResource((prev) => ({
       ...prev,
@@ -64,7 +70,7 @@ export default function AcademicResources() {
       [catKey]: prev[catKey].filter((item) => item.id !== id),
     }));
 
-    showNotification(`${title} removed successfully!`);
+    showNotification(`${getCategoryLabel(catKey)} removed successfully!`);
   };
 
   const toggleExpand = (catKey) => {
