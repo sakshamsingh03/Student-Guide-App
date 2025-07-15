@@ -43,9 +43,6 @@ export default function Layout() {
           <Link to="/resources" className="block hover:bg-sky-400 rounded px-4 py-3">
             📚 Academic Resources
           </Link>
-          <Link to="/settings" className="block hover:bg-blue-400 rounded px-4 py-3">
-            ⚙️ Settings
-          </Link>
         </nav>
         <button
           onClick={handleLogout}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "../Notification";
 
 const CATEGORIES = [
   { key: "notes", label: "📑 Notes" },
@@ -10,6 +11,8 @@ const CATEGORIES = [
 ];
 
 export default function AcademicResources() {
+  const { showNotification } = useNotification();
+
   const [resources, setResources] = useState(() => {
     const saved = localStorage.getItem("academicResourcesV2");
     return saved ? JSON.parse(saved) : {};
@@ -38,6 +41,7 @@ export default function AcademicResources() {
   const handleAdd = (catKey) => {
     const { title, link, description } = newResource[catKey];
     if (!title || !link) return;
+
     setResources((prev) => ({
       ...prev,
       [catKey]: [
@@ -45,17 +49,22 @@ export default function AcademicResources() {
         { id: Date.now(), title, description, link },
       ],
     }));
+
+    showNotification(`${title} added successfully!`);
+
     setNewResource((prev) => ({
       ...prev,
       [catKey]: { title: "", description: "", link: "" },
     }));
   };
 
-  const handleDelete = (catKey, id) => {
+  const handleDelete = (catKey, id, title) => {
     setResources((prev) => ({
       ...prev,
       [catKey]: prev[catKey].filter((item) => item.id !== id),
     }));
+
+    showNotification(`${title} removed successfully!`);
   };
 
   const toggleExpand = (catKey) => {
@@ -64,14 +73,16 @@ export default function AcademicResources() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white p-6">
-      <h1 className="text-4xl font-bold text-sky-700 mb-8 text-center">📚 Academic Resources</h1>
+      <h1 className="text-4xl font-bold text-sky-700 mb-8 text-center">
+        📚 Academic Resources
+      </h1>
 
       <div className="max-w-5xl mx-auto space-y-6">
         {CATEGORIES.map((cat) => (
           <div key={cat.key} className="bg-white rounded-lg shadow-lg">
             <button
               onClick={() => toggleExpand(cat.key)}
-              className="w-full flex justify-between items-center px-6 py-4 bg-sky-400 text-white rounded-t-lg hover:bg-blue-500 transition"
+              className="w-full flex justify-between items-center px-6 py-4 bg-sky-400 text-white rounded-t-lg hover:bg-sky-500 transition"
             >
               <span className="text-lg font-semibold">{cat.label}</span>
               <span>{expanded[cat.key] ? "▲" : "▼"}</span>
@@ -120,7 +131,7 @@ export default function AcademicResources() {
                         className="bg-green-50 border border-green-200 rounded-lg p-4 relative shadow hover:shadow-md transition"
                       >
                         <button
-                          onClick={() => handleDelete(cat.key, item.id)}
+                          onClick={() => handleDelete(cat.key, item.id, item.title)}
                           className="absolute top-2 right-2 text-red-500 hover:text-red-700"
                           title="Delete resource"
                         >

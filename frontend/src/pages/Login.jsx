@@ -8,10 +8,7 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Here you can add real authentication
     if (email && password) {
-      // For now just simulate successful login
       localStorage.setItem("user", JSON.stringify({ email }));
       navigate("/dashboard");
     } else {
