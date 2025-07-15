@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "../Notification"; 
 
 export default function Timetable() {
+  const { showNotification } = useNotification();
+
   const [timetable, setTimetable] = useState(() => {
     const saved = localStorage.getItem("timetable");
     return saved ? JSON.parse(saved) : {};
@@ -25,6 +28,7 @@ export default function Timetable() {
         [form.day]: [...dayData, { time: form.time, subject: form.subject }],
       };
     });
+    showNotification(`${form.day} entry added successfully!`); 
     setForm({ day: "Monday", time: "", subject: "" });
   };
 
@@ -34,6 +38,7 @@ export default function Timetable() {
       updated.splice(index, 1);
       return { ...prev, [day]: updated };
     });
+    showNotification(`Entry deleted successfully!`); 
   };
 
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
