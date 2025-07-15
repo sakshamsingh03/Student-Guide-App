@@ -100,7 +100,7 @@ export default function MoodTracker() {
           "
         >
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div key={day} className="text-center font-semibold text-gray-600 mt-0">
+            <div key={day} className="text-center font-semibold text-gray-600 ">
               {day}
             </div>
           ))}

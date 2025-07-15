@@ -9,6 +9,7 @@ import Timetable from "./pages/Timetable";
 import Diary from "./pages/Diary";
 import Notes from "./pages/Notes";
 import MoodTracker from "./pages/MoodTracker";
+import AcademicResources from "./pages/AcademicResources";
 
 
 
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="diary" element={<Diary />} />
           <Route path="notes" element={<Notes />} />
           <Route path="/mood" element={<MoodTracker />} />
+          <Route path="/resources" element={<AcademicResources />} />
 
 
           {/* Add more routes here */}
