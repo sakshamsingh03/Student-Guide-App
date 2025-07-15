@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNotification } from "../Notification"; // ✅ Import
 
 export default function Notes() {
+  const { showNotification } = useNotification(); // ✅ Get showNotification
+
   const [notes, setNotes] = useState(() => {
     const saved = localStorage.getItem("notes");
     return saved ? JSON.parse(saved) : [];
@@ -27,6 +30,7 @@ export default function Notes() {
         style: { ...textStyle },
       },
     ]);
+    showNotification("Note added successfully!"); // ✅ Notify
     setNewNote("");
     setTextStyle({
       bold: false,
@@ -38,6 +42,7 @@ export default function Notes() {
 
   const handleDeleteNote = (id) => {
     setNotes(notes.filter((note) => note.id !== id));
+    showNotification("Note removed successfully!"); // ✅ Notify
   };
 
   const toggleStyle = (type) => {
@@ -52,25 +57,19 @@ export default function Notes() {
         <div className="flex flex-wrap justify-end gap-2 mb-4">
           <button
             onClick={() => toggleStyle("bold")}
-            className={`px-2 py-1 border rounded ${
-              textStyle.bold ? "bg-sky-300" : ""
-            }`}
+            className={`px-2 py-1 border rounded ${textStyle.bold ? "bg-sky-300" : ""}`}
           >
             B
           </button>
           <button
             onClick={() => toggleStyle("italic")}
-            className={`px-2 py-1 border rounded ${
-              textStyle.italic ? "bg-sky-300" : ""
-            }`}
+            className={`px-2 py-1 border rounded ${textStyle.italic ? "bg-sky-300" : ""}`}
           >
             I
           </button>
           <button
             onClick={() => toggleStyle("underline")}
-            className={`px-2 py-1 border rounded ${
-              textStyle.underline ? "bg-sky-300" : ""
-            }`}
+            className={`px-2 py-1 border rounded ${textStyle.underline ? "bg-sky-300" : ""}`}
           >
             U
           </button>
