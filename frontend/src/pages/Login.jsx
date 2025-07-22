@@ -20,18 +20,17 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-700 font-sans px-4">
       <div className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden">
         
-        {/* Left Side - Welcome */}
         <div className="w-full md:w-1/2 bg-gradient-to-br from-purple-900 to-blue-800 p-8 md:p-10 text-white flex flex-col justify-center relative">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-2">Student Guide</h1>
           <h2 className="text-xl md:text-2xl font-bold mb-4">Welcome Page</h2>
           <p className="text-sm md:text-base">Sign in to continue access</p>
 
-          {/* Decorative bubbles */}
+         
           <div className="absolute top-4 right-6 w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full opacity-30 blur-2xl" />
           <div className="absolute bottom-6 left-6 w-16 h-16 md:w-20 md:h-20 bg-gradient-to-tr from-pink-500 to-purple-500 rounded-full opacity-40 blur-2xl" />
         </div>
 
-        {/* Right Side - Form */}
+      
         <div className="w-full md:w-1/2 p-8 md:p-10 bg-white">
           <h2 className="text-xl md:text-2xl font-bold mb-6 text-gray-800">Sign In</h2>
           <form onSubmit={handleSubmit} className="space-y-5">

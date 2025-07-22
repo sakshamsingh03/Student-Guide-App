@@ -9,7 +9,7 @@ import Diary from "./pages/Diary";
 import Notes from "./pages/Notes";
 import MoodTracker from "./pages/MoodTracker";
 import AcademicResources from "./pages/AcademicResources";
-
+import Profile from "./pages/Profile";
 import './index.css';
 
 export default function App() {
@@ -26,6 +26,8 @@ export default function App() {
           <Route path="notes" element={<Notes />} />
           <Route path="mood" element={<MoodTracker />} />
           <Route path="resources" element={<AcademicResources />} />
+          <Route path="profile" element={<Profile />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

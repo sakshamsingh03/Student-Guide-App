@@ -22,11 +22,9 @@ export default function Layout() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      {/* Sidebar for Desktop & Mobile */}
       <div className={`fixed md:static top-0 left-0 z-50 h-full bg-violet-500 text-white w-64 p-5 transition-transform duration-300 ease-in-out
         ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
         
-        {/* Close button for mobile */}
         <div className="md:hidden flex justify-end mb-4">
           <button onClick={() => setIsSidebarOpen(false)}>
             <IoClose size={24} />
@@ -57,6 +55,9 @@ export default function Layout() {
           <Link to="/resources" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             📚 Academic Resources
           </Link>
+          <Link to="/profile" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
+            👤 Profile
+          </Link>
         </nav>
 
         <button
@@ -67,7 +68,6 @@ export default function Layout() {
         </button>
       </div>
 
-      {/* Overlay for mobile */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black opacity-40 md:hidden z-40"
@@ -75,9 +75,8 @@ export default function Layout() {
         />
       )}
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col h-full overflow-y-auto">
-        {/* Mobile top bar */}
+    
         <div className="md:hidden flex items-center justify-between bg-white shadow p-4">
           <button onClick={() => setIsSidebarOpen(true)}>
             <FaBars size={20} />
@@ -85,7 +84,6 @@ export default function Layout() {
           <h1 className="text-3xl font-bold text-gray-700">Student Guide</h1>
         </div>
 
-        {/* Page content */}
         <main className="flex-1 bg-gray-50 p-6 md:p-8">
           <Outlet />
         </main>
