@@ -32,7 +32,7 @@ export default function Dashboard() {
         📊 Dashboard Summary
       </h2>
       <p className="text-gray-600 mb-8 text-sm sm:text-base">
-        Quick stats and tools for <strong>{username}</strong>.
+        Quick stats and tools
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -60,15 +60,6 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* ✅ Timetable */}
-        <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition duration-300">
-          <h3 className="text-xl font-semibold mb-2">🗓️ Timetable</h3>
-          <p className="text-gray-600">
-            {timetableCount > 0
-              ? `${timetableCount} classes scheduled.`
-              : "No classes yet."}
-          </p>
-        </div>
 
         {/* ✅ Notes */}
         <div className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition duration-300">
