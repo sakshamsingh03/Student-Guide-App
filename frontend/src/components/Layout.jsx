@@ -1,9 +1,12 @@
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { FaBars } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -19,41 +22,74 @@ export default function Layout() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <aside className="w-76 bg-violet-500 text-white p-5 space-y-8 h-screen overflow-y-auto">
-        <h1 className="text-4xl font-bold mb-6">Student Guide</h1>
+      {/* Sidebar for Desktop & Mobile */}
+      <div className={`fixed md:static top-0 left-0 z-50 h-full bg-violet-500 text-white w-64 p-5 transition-transform duration-300 ease-in-out
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
+        
+        {/* Close button for mobile */}
+        <div className="md:hidden flex justify-end mb-4">
+          <button onClick={() => setIsSidebarOpen(false)}>
+            <IoClose size={24} />
+          </button>
+        </div>
+
+        <h1 className="text-3xl font-bold mb-6">Student Guide</h1>
+
         <nav className="flex flex-col space-y-4">
-          <Link to="/dashboard" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/dashboard" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             🏠 Dashboard
           </Link>
-          <Link to="/tasks" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/tasks" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             ✅ Tasks
           </Link>
-          <Link to="/diary" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/diary" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             📓 Diary
           </Link>
-          <Link to="/calendar" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/calendar" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             🗓️ Timetable
           </Link>
-          <Link to="/notes" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/notes" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             📝 Notes
           </Link>
-          <Link to="/mood" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/mood" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             😊 Mood Tracker
           </Link>
-          <Link to="/resources" className="block hover:bg-sky-400 rounded px-4 py-3">
+          <Link to="/resources" onClick={() => setIsSidebarOpen(false)} className="block hover:bg-sky-400 rounded px-4 py-3">
             📚 Academic Resources
           </Link>
         </nav>
+
         <button
           onClick={handleLogout}
-          className=" mt-8 bg-sky-500 text-white rounded px-4 py-2 hover:bg-sky-700 transition"
+          className="mt-8 bg-sky-500 text-white rounded px-4 py-2 hover:bg-sky-700 transition"
         >
           Logout
         </button>
-      </aside>
-      <main className="flex-1 bg-gray-50 p-8 overflow-y-auto h-screen">
-        <Outlet />
-      </main>
+      </div>
+
+      {/* Overlay for mobile */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-40 md:hidden z-40"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col h-full overflow-y-auto">
+        {/* Mobile top bar */}
+        <div className="md:hidden flex items-center justify-between bg-white shadow p-4">
+          <button onClick={() => setIsSidebarOpen(true)}>
+            <FaBars size={20} />
+          </button>
+          <h1 className="text-3xl font-bold text-gray-700">Student Guide</h1>
+        </div>
+
+        {/* Page content */}
+        <main className="flex-1 bg-gray-50 p-6 md:p-8">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

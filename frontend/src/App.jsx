@@ -4,16 +4,13 @@ import Dashboard from "./pages/Dashboard";
 import TaskManager from "./pages/TaskManager";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import './index.css';
 import Timetable from "./pages/Timetable";
 import Diary from "./pages/Diary";
 import Notes from "./pages/Notes";
 import MoodTracker from "./pages/MoodTracker";
 import AcademicResources from "./pages/AcademicResources";
 
-
-
-// import other pages...
+import './index.css';
 
 export default function App() {
   return (
@@ -27,11 +24,8 @@ export default function App() {
           <Route path="calendar" element={<Timetable />} />
           <Route path="diary" element={<Diary />} />
           <Route path="notes" element={<Notes />} />
-          <Route path="/mood" element={<MoodTracker />} />
-          <Route path="/resources" element={<AcademicResources />} />
-
-
-          {/* Add more routes here */}
+          <Route path="mood" element={<MoodTracker />} />
+          <Route path="resources" element={<AcademicResources />} />
         </Route>
       </Routes>
     </BrowserRouter>

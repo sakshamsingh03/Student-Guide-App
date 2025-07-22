@@ -17,28 +17,29 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-800 to-purple-900 font-sans">
-      <div className="flex max-w-4xl w-full bg-white rounded-xl shadow-2xl overflow-hidden">
-        {/* Left Side - Welcome */}
-        <div className="w-1/2 bg-gradient-to-br from-blue-900 to-indigo-700 p-10 text-white flex flex-col justify-center relative">
-          <h1 className="text-3xl font-extrabold mb-2">Student Guide</h1>
-          <h2 className="text-2xl font-bold mb-4">Welcome Aboard!</h2>
-          <p className="text-md">Create your account to get started</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-700 font-sans">
+      <div className="flex flex-col md:flex-row max-w-4xl w-full bg-white rounded-xl shadow-2xl overflow-hidden">
+        
+        {/* Left Side - Branding */}
+        <div className="md:w-1/2 bg-gradient-to-br from-purple-900 to-blue-800 p-8 sm:p-10 text-white flex flex-col justify-center relative">
+          <h1 className="text-4xl font-extrabold mb-2">Student Guide</h1>
+          <h2 className="text-2xl font-semibold mb-4">Create Your Account</h2>
+          <p className="text-md">Start organizing your student life today!</p>
 
-          {/* Decorative bubbles */}
-          <div className="absolute top-4 right-6 w-24 h-24 bg-gradient-to-br from-purple-400 to-indigo-600 rounded-full opacity-30 blur-2xl" />
-          <div className="absolute bottom-8 left-10 w-20 h-20 bg-gradient-to-tr from-blue-400 to-purple-500 rounded-full opacity-40 blur-2xl" />
+          {/* Decorative blur elements */}
+          <div className="absolute top-4 right-6 w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full opacity-30 blur-2xl" />
+          <div className="absolute bottom-8 left-10 w-20 h-20 bg-gradient-to-tr from-pink-500 to-purple-500 rounded-full opacity-40 blur-2xl" />
         </div>
 
         {/* Right Side - Form */}
-        <div className="w-1/2 p-10 bg-white">
-          <h2 className="text-2xl font-bold mb-6 text-gray-800">Sign Up</h2>
+        <div className="md:w-1/2 p-6 sm:p-10 bg-white">
+          <h2 className="text-xl md:text-2xl font-bold mb-6 text-gray-800">Sign Up</h2>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-gray-600 mb-1">Email Address</label>
               <input
                 type="email"
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -48,7 +49,7 @@ export default function Signup() {
               <label className="block text-gray-600 mb-1">Password</label>
               <input
                 type="password"
-                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -56,15 +57,15 @@ export default function Signup() {
             </div>
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 rounded-md hover:from-blue-700 hover:to-purple-700 transition"
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 rounded-md hover:from-purple-600 hover:to-pink-600 transition"
             >
-              Create Account →
+              Create Account
             </button>
           </form>
 
           <p className="mt-6 text-center text-gray-600">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-700 hover:underline font-medium">
+            <a href="/login" className="text-purple-700 hover:underline font-medium">
               Login
             </a>
           </p>
