@@ -85,7 +85,7 @@ export default function MoodTracker() {
     <div className="min-h-screen bg-gradient-to-br from-sky-50 to-white p-4">
       <h1 className="text-4xl text-center font-bold text-sky-600 mb-4">😊 Mood Tracker</h1>
 
-      <div className="max-w-5xl mx-auto bg-white shadow rounded-lg p-4 mb-4">
+      <div className="max-w-5xl h-[800px] mx-auto bg-white shadow rounded-lg p-4 mb-4">
         <div className="flex items-center justify-between mb-4">
           <button onClick={goPrevMonth} className="px-3 py-1 rounded bg-sky-400 text-white hover:bg-sky-500">
             ← Prev
