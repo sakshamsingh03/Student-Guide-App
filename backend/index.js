@@ -12,5 +12,5 @@ app.get('/',(req,res)=>{
 
 
 app.listen(port,()=>{
-    console.log(`Server is buring coal at port ${port}`);
+    console.log(`Server is burning 🔥 coal at port ${port}`);
 })
